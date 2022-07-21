@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] AudioSource jumpAudio;
     [SerializeField] AudioSource inAirAudio;
 
+    [SerializeField] Button pause;
+
+    private bool isPaused;
+
     private float _runCount = 0.3f;
 
     private bool _isRun; 
@@ -25,6 +30,7 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         gameAnimator = gameObject.GetComponent<Animator>();
+        isPaused = false;
     }
 
     void AnimationControl()
@@ -86,6 +92,10 @@ public class PlayerControl : MonoBehaviour
             jumpAudio.Play();
             
             runAudio.Stop();
+        }
+        if(Input.GetKeyDown(KeyCode.Escape) && !isPaused)
+        {
+            pause.onClick.Invoke();
         }
 
         if (!isGrounded && _isRun)
